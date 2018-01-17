@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sw.core.menu.dao.SysBackMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.sw.core.menu.domain.SysBackMenu" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="perm_code" property="permCode" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="default_open" property="defaultOpen" jdbcType="INTEGER" />
+    <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.sw.core.menu.domain.SysBackMenu" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pid, name, type, sort, url, perm_code, icon, state, default_open, menu_level
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_back_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+    <select id="findBsTableBySearchName" resultType="java.util.HashMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from sys_back_menu WHERE 1=1
+        <if test="searchName!=null and searchName!=''">
+            AND name like '%${searchName}%'
+        </if>
+        ORDER BY ${sort} ${order}
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countBySearchName" resultType="java.lang.Long">
+        SELECT count(1) FROM sys_back_menu WHERE 1=1
+        <if test="searchName!=null and searchName!=''">
+            AND name LIKE '%${searchName}%'
+        </if>
+    </select>
+
+    <select id="findMenuList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from sys_back_menu WHERE 1=1
+        <!--<if test="parentId==null">
+            AND pid is NULL
+        </if>
+        <if test="parentId!=null">
+            AND pid = #{parentId}
+        </if>-->
+        ORDER BY sort ASC
+    </select>
+
+    <select id="countByParentId" resultType="java.lang.Long">
+        SELECT count(1) FROM sys_back_menu WHERE 1=1
+        <!--<if test="parentId==null">
+            AND pid is NULL
+        </if>
+        <if test="parentId!=null">
+            AND pid = #{parentId}
+        </if>-->
+        ORDER BY sort ASC
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_back_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        DELETE FROM sys_back_menu WHERE id IN
+        <foreach collection="list" item="id" index="index"
+                 open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPid" parameterType="java.lang.String">
+        DELETE FROM sys_back_menu WHERE pid = #{id,jdbcType=VARCHAR}
+    </delete>
+
+  <insert id="insert" parameterType="com.sw.core.menu.domain.SysBackMenu" >
+    insert into sys_back_menu (id, pid, name, 
+      type, sort, url, perm_code, 
+      icon, state, default_open,
+      menu_level, description)
+    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{permCode,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{defaultOpen,jdbcType=INTEGER},
+      #{menuLevel,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sw.core.menu.domain.SysBackMenu" >
+    insert into sys_back_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="permCode != null" >
+        perm_code,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="defaultOpen != null" >
+        default_open,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="menuLevel != null" >
+        menu_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="permCode != null" >
+        #{permCode,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultOpen != null" >
+        #{defaultOpen,jdbcType=INTEGER},
+      </if>
+      <if test="menuLevel != null" >
+        #{menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sw.core.menu.domain.SysBackMenu" >
+    update sys_back_menu
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="permCode != null" >
+        perm_code = #{permCode,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultOpen != null" >
+        default_open = #{defaultOpen,jdbcType=INTEGER},
+      </if>
+      <if test="menuLevel != null" >
+            menuLevel = #{menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sw.core.menu.domain.SysBackMenu" >
+    update sys_back_menu
+    set pid = #{pid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      perm_code = #{permCode,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      default_open = #{defaultOpen,jdbcType=INTEGER},
+      menu_level = #{menuLevel,jdbcType=INTEGER},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sw.core.menu.domain.SysBackMenu" >
+    update sys_back_menu
+    set pid = #{pid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      perm_code = #{permCode,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      default_open = #{defaultOpen,jdbcType=INTEGER},
+      menu_level = #{menuLevel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,9 @@
+.selected_menu {
+    /*#F8F8F8: navbar background
+    #E7E7E7: navbar border
+    #777: default color
+    #333: hover color (#5E5E5E for .nav-brand)
+    #555: active color
+    #D5D5D5: active background*/
+    background-color: #eee;
+}
