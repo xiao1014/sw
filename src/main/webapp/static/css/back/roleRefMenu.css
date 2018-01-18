@@ -1,0 +1,22 @@
+.secondMenuTable td{width:25%; float:left;border:0!important;}
+.secondMenuTable td:nth-child(4n){border-right:0!important;}
+@media (max-width: 991px) {
+    .secondMenuTable td{ width:33.33%;}
+    .secondMenuTable td:nth-child(3n){border-right:0!important;}
+    .secondMenuTable td:nth-child(4n){ border-right:1px #ddd solid!important;}
+}
+@media (max-width: 767px) {
+    .secondMenuTable td{ width:50%;}
+    .secondMenuTable td:nth-child(2n){border-right:0!important;}
+    .secondMenuTable td:nth-child(3n){ border-right:1px #ddd solid!important;}
+}
+@media (max-width: 460px) {
+    .secondMenuTable td{width:100%;}
+    .secondMenuTable td{border-right:0!important;}
+}
+.glyphicon-chevron-down{
+    cursor:hand;
+    margin-right: 5px;
+}
+label input{vertical-align: -3px;}
+li {list-style-type:none;}
