@@ -1,11 +1,15 @@
 package com.sw.core.role.domain;
 
+import java.util.Date;
+
 public class SysRoleRefMenu {
     private String id;
 
     private String roleId;
 
     private String menuId;
+
+    private Date createTime;
 
     public String getId() {
         return id;
@@ -29,5 +33,13 @@ public class SysRoleRefMenu {
 
     public void setMenuId(String menuId) {
         this.menuId = menuId == null ? null : menuId.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
