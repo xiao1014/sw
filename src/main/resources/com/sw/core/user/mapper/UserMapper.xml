@@ -7,10 +7,11 @@
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="account_name" property="accountName" jdbcType="VARCHAR" />
         <result column="salt" property="salt" jdbcType="VARCHAR" />
+        <result column="role_id" property="roleId" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, username, password, account_name
+        id, username, password, account_name, role_id
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -40,7 +41,7 @@
 
     <select id="selectByAccountName" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
-        id, username, account_name, salt, password
+        id, username, account_name, salt, password, role_id
         from user
         where account_name = #{account_name,jdbcType=VARCHAR}
     </select>
@@ -51,9 +52,9 @@
     </delete>
     <insert id="insert" parameterType="com.sw.core.user.domain.User" >
         insert into user (id, username, password,
-        account_name, salt)
+        account_name, salt, role_id)
         values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-        #{accountName,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
+        #{accountName,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.sw.core.user.domain.User" >
         insert into user
@@ -69,6 +70,9 @@
             </if>
             <if test="accountName != null" >
                 account_name,
+            </if>
+            <if test="roleId != null" >
+                role_id,
             </if>
             <if test="salt != null" >
                 salt,
@@ -101,6 +105,9 @@
             <if test="accountName != null" >
                 account_name = #{accountName,jdbcType=VARCHAR},
             </if>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
@@ -108,7 +115,8 @@
         update user
         set username = #{username,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
-        account_name = #{accountName,jdbcType=VARCHAR}
+        account_name = #{accountName,jdbcType=VARCHAR},
+        role_id = #{roleId,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
 

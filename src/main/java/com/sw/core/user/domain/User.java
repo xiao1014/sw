@@ -11,6 +11,8 @@ public class User {
 
     private String salt;
 
+    private String roleId;
+
     public String getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 }
