@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @项目：sw
@@ -47,5 +48,10 @@ public class SysRoleRefMenuServiceImpl extends BaseServiceImpl<SysRoleRefMenu, S
                 }
             }
         }
+    }
+
+    @Override
+    public List<SysRoleRefMenu> findByRoleId(String roleId) {
+        return sysRoleRefMenuMapper.findByRoleId(roleId);
     }
 }

@@ -50,6 +50,14 @@
         </if>
     </select>
 
+    <select id="findMenuListByRoleId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from sys_back_menu WHERE 1=1
+        AND id IN (SELECT menu_id FROM sys_role_ref_menu WHERE role_id = #{roleId, jdbcType=VARCHAR})
+        ORDER BY sort ASC
+    </select>
+
     <select id="findMenuList" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />

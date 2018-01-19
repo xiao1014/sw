@@ -3,6 +3,8 @@ package com.sw.core.role.service;
 import com.sw.core.base.BaseService;
 import com.sw.core.role.domain.SysRoleRefMenu;
 
+import java.util.List;
+
 /**
  * @项目：sw
  * @包：com.sw.core.role.service
@@ -12,4 +14,6 @@ import com.sw.core.role.domain.SysRoleRefMenu;
  */
 public interface SysRoleRefMenuService extends BaseService<SysRoleRefMenu, String> {
     void insertRoleRefMenu(String menuIds, String roleId);
+
+    List<SysRoleRefMenu> findByRoleId(String roleId);
 }

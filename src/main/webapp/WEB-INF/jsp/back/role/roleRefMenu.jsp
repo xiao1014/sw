@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: 29488
@@ -27,7 +28,9 @@
                     <c:forEach items="${menuList}" var="menu">
                         <c:if test="${empty menu.pid}">
                             <div class="menuTitle firstMenuTitle" style="background-color: #d1d1d1;border: 1px solid #e8e8e8;">
-                                <label><input type="checkbox" class="${menu.id}" value="${menu.id}"/>${menu.name}</label>
+                                <label><input type="checkbox" class="${menu.id}"
+                                            <c:if test="${fn:contains(myMenuList, menu.id)}">checked</c:if>
+                                              value="${menu.id}"/>${menu.name}</label>
                                 <span class="pull-right"
                                       onclick="hideById('secondMenu${menu.id}')"></span>
                             </div>
@@ -41,7 +44,8 @@
                                                     <div>
                                                         <div class="menuTitle secondMenuTitle">
                                                             <label style="font-size: 12px;">
-                                                                <input type="checkbox" class="${menu.id}"
+                                                                <input type="checkbox" class="${menu.id} ${secondMenu.id}"
+                                                                       <c:if test="${fn:contains(myMenuList, secondMenu.id)}">checked</c:if>
                                                                        value="${secondMenu.id}">${secondMenu.name}
                                                             </label>
                                                             <span class="pull-right"
@@ -54,7 +58,8 @@
                                                                         <li class="menuTitle">
                                                                             <label style="font-size: 12px;">
                                                                                 <input type="checkbox" value="${thirdMenu.id}"
-                                                                                       class="${menu.id} ${secondMenu.id}">${thirdMenu.name}
+                                                                                       <c:if test="${fn:contains(myMenuList, thirdMenu.id)}">checked</c:if>
+                                                                                       class="${menu.id} ${secondMenu.id} ${thirdMenu.id}">${thirdMenu.name}
                                                                             </label>
                                                                         </li>
                                                                     </c:if>

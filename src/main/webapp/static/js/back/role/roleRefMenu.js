@@ -23,7 +23,7 @@ $(function () {
                     $(this).prop("checked", checked);
                 }
                 // 选中上级菜单
-                if (checked && className!=$(this).prop("class") &&　className.indexOf($(this).prop("class")) != -1) {
+                if (checked &&　className.indexOf($(this).prop("class")) != -1) {
                     $(this).prop("checked", checked);
                 }
             })

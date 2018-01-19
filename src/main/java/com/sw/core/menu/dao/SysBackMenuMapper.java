@@ -31,4 +31,6 @@ public interface SysBackMenuMapper extends BaseMapper<SysBackMenu, String> {
     Long countByParentId(String parentId);
 
     void deleteByPid(String id);
+
+    List<SysBackMenu> findMenuListByRoleId(String roleId);
 }

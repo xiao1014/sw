@@ -5,6 +5,8 @@ import com.sw.core.form.PageHelper;
 import com.sw.core.menu.domain.SysBackMenu;
 import com.sw.core.menu.service.SysBackMenuService;
 import com.sw.core.role.domain.SysRole;
+import com.sw.core.role.domain.SysRoleRefMenu;
+import com.sw.core.role.service.SysRoleRefMenuService;
 import com.sw.core.role.service.SysRoleService;
 import com.sw.core.util.CommonUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -15,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @项目：sw
@@ -36,6 +35,8 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
     @Resource
     private SysBackMenuService sysBackMenuService;
+    @Resource
+    private SysRoleRefMenuService sysRoleRefMenuService;
 
     @RequestMapping(value = "/roleListUi", method = RequestMethod.GET)
     public String roleListUi() {
@@ -89,6 +90,14 @@ public class SysRoleController {
         SysRole role = sysRoleService.selectByPrimaryKey(id);
         model.addAttribute("role", role);
         List<SysBackMenu> menuList = sysBackMenuService.findMenuList(null);
+        // 角色关联的菜单
+        List<SysRoleRefMenu> thisRoleMenuList = sysRoleRefMenuService.findByRoleId(id);
+        List<String> myMenuList = new ArrayList<>();
+        if (thisRoleMenuList != null && !thisRoleMenuList.isEmpty()) {
+            for (SysRoleRefMenu roleRefMenu : thisRoleMenuList) {
+                myMenuList.add(roleRefMenu.getMenuId());
+            }
+        }
         Map<String, List<SysBackMenu>> menuMap = new HashMap<>();
         if (menuList!=null && !menuList.isEmpty()) {
             for (SysBackMenu sysBackMenu : menuList) {
@@ -102,6 +111,7 @@ public class SysRoleController {
         model.addAttribute("menuList", menuList);
         model.addAttribute("menuMap", menuMap);
         model.addAttribute("roleId", id);
+        model.addAttribute("myMenuList", myMenuList);
         return "/back/role/roleRefMenu";
     }
 }

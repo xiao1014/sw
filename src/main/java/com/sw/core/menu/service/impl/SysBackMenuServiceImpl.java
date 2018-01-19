@@ -50,4 +50,9 @@ public class SysBackMenuServiceImpl extends BaseServiceImpl<SysBackMenu, String>
         sysBackMenuMapper.deleteByPid(id);
         deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<SysBackMenu> findMenuListByRoleId(String roleId) {
+        return sysBackMenuMapper.findMenuListByRoleId(roleId);
+    }
 }

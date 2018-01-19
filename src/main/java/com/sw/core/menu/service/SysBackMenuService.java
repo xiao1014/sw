@@ -19,4 +19,6 @@ public interface SysBackMenuService extends BaseService<SysBackMenu, String> {
     List<SysBackMenu> findMenuList(String parentId);
 
     void deleteAllById(String ids);
+
+    List<SysBackMenu> findMenuListByRoleId(String roleId);
 }
