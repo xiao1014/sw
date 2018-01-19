@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.Date;
 
 /**
  * @项目：sw
@@ -33,15 +33,18 @@ public class SysRoleRefMenuServiceImpl extends BaseServiceImpl<SysRoleRefMenu, S
 
     @Override
     public void insertRoleRefMenu(String menuIds, String roleId) {
-        sysRoleRefMenuMapper.deleteByRoleId(roleId);
-        if (StringUtils.isNotBlank(menuIds)) {
-            String[] menuIdArr = menuIds.split(",");
-            for (String menuId : menuIdArr) {
-                SysRoleRefMenu sysRoleRefMenu = new SysRoleRefMenu();
-                sysRoleRefMenu.setId(CommonUtil.getUUID());
-                sysRoleRefMenu.setMenuId(menuId);
-                sysRoleRefMenu.setRoleId(roleId);
-                insert(sysRoleRefMenu);
+        if(StringUtils.isNotBlank(menuIds) && StringUtils.isNotBlank(roleId)) {
+            sysRoleRefMenuMapper.deleteByRoleId(roleId);
+            if (StringUtils.isNotBlank(menuIds)) {
+                String[] menuIdArr = menuIds.split(",");
+                for (String menuId : menuIdArr) {
+                    SysRoleRefMenu sysRoleRefMenu = new SysRoleRefMenu();
+                    sysRoleRefMenu.setId(CommonUtil.getUUID());
+                    sysRoleRefMenu.setMenuId(menuId);
+                    sysRoleRefMenu.setRoleId(roleId);
+                    sysRoleRefMenu.setCreateTime(new Date());
+                    insert(sysRoleRefMenu);
+                }
             }
         }
     }

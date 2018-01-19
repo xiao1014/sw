@@ -41,6 +41,37 @@ function saveOrUpdateRole() {
         if ($(this).prop("checked")) {
             menuIds += $(this).val()+",";
         }
+    });
+    $.ajax({
+        type: 'post',
+        dataType:"json",
+        url: '/back/roleRefMenu/save',
+        data: {menuIds:menuIds, roleId: $("#roleId").val()},
+        success: function (result) {
+
+            if (result=="success") {
+                BootstrapDialog.show({
+                    title : "成功",
+                    message : "保存成功",
+                    closable: true,
+                    closeByBackdrop: true,
+                    type : BootstrapDialog.TYPE_SUCCESS,
+                    size : BootstrapDialog.SIZE_SMALL,
+                    onhide: function () {
+                        window.history.go(-1);
+                    }
+                });
+            } else {
+                BootstrapDialog.show({
+                    title : "失败",
+                    message : "保存失败",
+                    closable: true,
+                    closeByBackdrop: false,
+                    type : BootstrapDialog.TYPE_DANGER,
+                    size : BootstrapDialog.SIZE_SMALL
+                });
+            }
+        }
     })
     console.info(menuIds)
 }

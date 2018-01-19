@@ -101,6 +101,7 @@ public class SysRoleController {
         }
         model.addAttribute("menuList", menuList);
         model.addAttribute("menuMap", menuMap);
+        model.addAttribute("roleId", id);
         return "/back/role/roleRefMenu";
     }
 }

@@ -22,6 +22,7 @@
         <jsp:include page="/back/menu/mainMenu"/>
         <div id="content">
             <div class="content row">
+                <input type="hidden" id="roleId" value="${roleId}">
                 <div>
                     <c:forEach items="${menuList}" var="menu">
                         <c:if test="${empty menu.pid}">
