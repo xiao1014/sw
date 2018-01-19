@@ -17,10 +17,11 @@
         <c:forEach items="${menuList}" var="menu">
             <c:if test="${empty menu.pid}">
                 <li>
-                    <a href="#${menu.id}" class="nav-header collapsed" data-toggle="collapse">
+                    <a href="#${menu.id}" data-sys-menu-url="${menu.url}"
+                       class="firstMenu nav-header collapsed" data-toggle="collapse">
                         <i class="${menu.icon}"></i>
                         ${menu.name}
-                        <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                        <span class="pull-right"></span>
                     </a>
                     <ul id="${menu.id}" class="nav nav-list collapse second_menu <c:if test='${menu.defaultOpen eq 1}'>in</c:if> "
                         <c:if test="${menu.defaultOpen eq 1}">style="height: auto;"</c:if> >

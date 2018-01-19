@@ -24,4 +24,13 @@ $(function () {
             // $(this).parent().addClass("in");
         }
     });
+
+    $(".firstMenu").each(function () {
+        if ($(this).next("ul").find("li").length > 0) {
+            $(this).find("span").eq(0).addClass("glyphicon glyphicon-chevron-down");
+        } else {
+            $(this).removeAttrs("data-toggle");
+            $(this).prop("href", $(this).attr("data-sys-menu-url"));
+        }
+    })
 })

@@ -2,7 +2,10 @@ package com.sw.core.menu.controller;
 
 import com.sw.core.menu.domain.SysBackMenu;
 import com.sw.core.menu.service.SysBackMenuService;
+import com.sw.core.user.domain.User;
+import com.sw.core.user.service.UserService;
 import com.sw.core.util.CommonUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,8 @@ import java.util.List;
 public class SysBackMenuController {
     @Resource
     private SysBackMenuService sysBackMenuService;
+    @Resource
+    private UserService userService;
 
     @RequestMapping(value = "/menuListUi", method = RequestMethod.GET)
     public String menuListUi() {
@@ -75,7 +80,9 @@ public class SysBackMenuController {
 
     @RequestMapping(value = "/mainMenu", method = RequestMethod.GET)
     public String mainMenu(Model model) {
-        List<SysBackMenu> menuList = sysBackMenuService.findMenuList(null);
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        User user = userService.getUserBuAccountName(principal.toString());
+        List<SysBackMenu> menuList = sysBackMenuService.findMenuListByRoleId(user.getRoleId());
         model.addAttribute("menuList", menuList);
         return "/back/menu";
     }
